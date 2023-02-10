@@ -10,40 +10,44 @@ import os
 import platform
 import sys
 
+f = open('user_info.txt', 'r')
 
-
-ID = input('Enter your ID : ') # Please fill in your e-mail address at keio.jp (yukichi.fukuzawa@keio.jp) 
-PW = input('Enter your Password : ')# Please fill in your password in keio.jp
-
+USERDATALIST = f.readlines() # Please fill in your e-mail address at keio.jp (yukichi.fukuzawa@keio.jp) 
+c_url = input('Enter cource URL  : ')
 name = input('Enter directory name : ')
-directory_name = '/Users/nakatahiroto/moodledownroader/{}'.format(name) 
+c_directory = os.getcwd()
+directory_name = c_directory + '/' + name
 os.mkdir(directory_name)
-os.chdir(directory_name)
+
 # Optional settings of chrome driver
 options = webdriver.ChromeOptions()
+options.add_experimental_option('prefs', {
+    'download.default_directory': directory_name
+})
 options.add_argument('--headless')
 options.add_argument('--kiosk-printing')
+os.chdir(directory_name)
 
 # Boot chrome driver
 driver = webdriver.Chrome(options=options)
 driver.set_page_load_timeout(15) # Time out 15 sec
 
 # GET (HTML Page)
-driver.get("https://moodle.cis.kit.ac.jp/login/index.php")
+driver.get(USERDATALIST[2])
 time.sleep(5)
 
 # Find elements and POST (send keys to the input tag)
 id_element = driver.find_element(By.NAME,"j_username")
-id_element.send_keys(ID)
+id_element.send_keys(USERDATALIST[0])
 pw_element = driver.find_element(By.NAME,"j_password")
-pw_element.send_keys(PW)
+pw_element.send_keys(USERDATALIST[1])
 
 
 # Click login button
-login_button = driver.find_element(By.NAME,"_eventId_proceed")
-login_button.click()
+#login_button = driver.find_element(By.NAME,"_eventId_proceed")
+#login_button.click()
 time.sleep(5)
-c_url = input('Enter cource URL  : ')
+
 driver.get(c_url)
 
 elements = driver.find_elements(By.XPATH,"//a[@href]")
