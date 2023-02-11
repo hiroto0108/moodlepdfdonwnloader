@@ -1,5 +1,7 @@
 # moodlepdfdonwnloader
-京都工芸繊維大学のmoodleにおいて，講義資料のpdfを自動でダウンロードするPythonプログラムです
+京都工芸繊維大学のmoodleにおいて，講義資料のpdfを自動でダウンロードするPythonプログラムです．
+
+**追記**：LMSのログインに学認(シボレスIdP)を用いている大学であれば，サポートしている可能性があります．
 
 **前提条件**
 * chromeがインストール済みであること
@@ -29,3 +31,8 @@ Ex)1行目にユーザー名，2行目にパスワード，3行目にLMSのト�
 * https://tipstour.net/python-url-parse
 * https://senablog.com/python-selenium-allpage-url/
 * https://qiita.com/pd1/items/2f6ca7547d719c0262f0
+
+# 今後の開発予定
+* GUI化を行う
+* ユーザー情報の保存を任意にする
+* exe化も出来たらしたい

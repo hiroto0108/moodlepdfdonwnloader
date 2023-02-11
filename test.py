@@ -10,11 +10,14 @@ import os
 import platform
 import sys
 
+#file pointer
 f = open('user_info.txt', 'r')
 
-USERDATALIST = f.readlines() # Please fill in your e-mail address at keio.jp (yukichi.fukuzawa@keio.jp) 
+#input user_information to list 
+USERDATALIST = f.readlines() 
 c_url = input('Enter cource URL  : ')
 name = input('Enter directory name : ')
+#make directory to save the pdf files
 c_directory = os.getcwd()
 directory_name = c_directory + '/' + name
 os.mkdir(directory_name)
@@ -44,12 +47,12 @@ pw_element.send_keys(USERDATALIST[1])
 
 
 # Click login button
-#login_button = driver.find_element(By.NAME,"_eventId_proceed")
-#login_button.click()
 time.sleep(5)
 
+#access to cource page
 driver.get(c_url)
 
+#get the links to class pdf files
 elements = driver.find_elements(By.XPATH,"//a[@href]")
 links = [i.get_attribute('href') for i in elements]
 for url in links:
@@ -57,14 +60,13 @@ for url in links:
     filepath = parse.path
     if filepath == "/mod/resource/view.php":
         driver.get(url)
+        #download a pdf
         driver.execute_script('window.print();')
         print("file downloading...")
         time.sleep(2)
 
 print("Complete!")
-#driver.execute_script('window.print();')
+
 time.sleep(3)
-
-
 
 driver.quit()
