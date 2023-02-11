@@ -29,6 +29,7 @@ Ex)1行目にユーザー名，2行目にパスワード，3行目にLMSのト�
 `パスワード`
 
 `LMSのログインページへと繋がるURL`
+(ここはKITなら`https://moodle.cis.kit.ac.jp/login/index.php`となります）
 
 # 使い方
 1. 事前設定を行う
