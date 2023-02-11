@@ -4,7 +4,9 @@
 **追記**：LMSのログインに学認(シボレスIdP)を用いている大学であれば，サポートしている可能性があります．
 
 # 現時点でMacでの動作しか保証していません．Windows環境では適宜コードを編集してください．
+windowsで試した人いたら教えて欲しいかも．winでのPython環境構築がめんどくさいだけですが．
 
+# はじめに
 **前提条件**
 * chromeがインストール済みであること
 * Pythonが実行できる環境であること
@@ -37,7 +39,7 @@ Ex)1行目にユーザー名，2行目にパスワード，3行目にLMSのト�
 6. pdfはPythonのコードが置かれているディレクトリに，4で入力した名前のディレクトリで保存されている（はず）
 7. あとは予習復習を頑張ってください
 
-参考ページ
+# 参考ページ
 * https://qiita.com/memakura/items/20a02161fa7e18d8a693
 * https://qiita.com/yumaloop/items/891b2476d47542d3ccf9
 * https://senablog.com/python-selenium-pdf-download/
