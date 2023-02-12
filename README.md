@@ -3,8 +3,8 @@
 
 **追記**：LMSのログインに学認(シボレスIdP)を用いている大学であれば，サポートしている可能性があります．
 
-# 現時点でMacでの動作しか保証していません．Windows環境では適宜コードを編集してください．
-windowsで試した人いたら教えて欲しいかも．winでのPython環境構築がめんどくさいだけですが．
+# Windows環境向けのコードです．
+Mac OSやLinux系OSの場合は，mainブランチのコードを使うことをお勧めします．
 
 # はじめに
 **前提条件**
@@ -14,9 +14,20 @@ windowsで試した人いたら教えて欲しいかも．winでのPython環境�
 
 (seleniumとchrome driverの導入の参考：https://qiita.com/memakura/items/20a02161fa7e18d8a693)
 
-Pythonの環境があれば，`pip install selenium`でseleniumをインストールし，chrome driverも`pip install chromedriver-binary`でインストールすれば完了です．エラーが出る場合は，`chromedriver-path`でchrome driverがインストールされたディレクトリーがわかるので，コピーしてPATHを通せば完了です．
+Pythonの環境があれば，`pip install selenium`でseleniumをインストールし，chrome driverも`pip install chromedriver-binary`でインストールしてください．~~エラーが出る場合は，~~`chromedriver-path`でchrome driverがインストールされたディレクトリーがわかるので，コピーしてPATHを通せば完了です．PATHを通さないとpdfがダウンロードできません. 
 
-**追記**:batファイルにpipとバイナリのフルパスを表示するコマンドの例を載せているので，テキストエディタなどで参照してください．
+**追記**:batファイルにpipとバイナリのフルパスを表示するコマンドの例を載せているので，テキストエディタなどで参照してください．PowerShellでpipを実行した場合は、インストール完了後にもう一度同じコマンドを打つと、pipで管理されているパッケージが置かれているディレクトリが表示されるので、そこからchromedrive-binaryディレクトリを探し、その中にある`chromedrive-binary.exe`のパスで、PATHを通してください．
+
+Ex)***太字***になっている部分がpipで管理されているパッケージが置かれているディレクトリです．
+
+>PS C:\git\workspace_kmc\moodlepdfdonwnloader> pip install chromedriver-binary-auto
+>>WARNING: Ignoring invalid distribution -ip (c:\python310\lib\site-packages)
+WARNING: Ignoring invalid distribution - (c:\python310\lib\site-packages)
+WARNING: Ignoring invalid distribution -ip (c:\python310\lib\site-packages)
+WARNING: Ignoring invalid distribution - (c:\python310\lib\site-packages)
+Requirement already satisfied: chromedriver-binary-auto in ***[c:\python310\lib\site-packages]***　(0.2.3)
+WARNING: Ignoring invalid distribution -ip (c:\python310\lib\site-packages)
+WARNING: Ignoring invalid distribution - (c:\python310\lib\........
 
 **事前設定**
 
@@ -47,6 +58,7 @@ Ex)1行目にユーザー名，2行目にパスワード，3行目にLMSのト�
 * https://tipstour.net/python-url-parse
 * https://senablog.com/python-selenium-allpage-url/
 * https://qiita.com/pd1/items/2f6ca7547d719c0262f0
+* https://isgs-lab.com/183/
 
 # 今後の開発予定
 * GUI化を行う
