@@ -6,9 +6,21 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 from urllib.parse import urlparse
+import chromedriver_binary
 import os
-import platform
-import sys
+import json 
+
+appState = {
+    "recentDestinations": [
+        {
+            "id": "Save as PDF",
+            "origin": "local",
+            "account":"",
+        }
+    ],
+    "selectedDestinationId": "Save as PDF",
+    "version": 2
+}
 
 #file pointer
 f = open('user_info.txt', 'r')
@@ -19,22 +31,34 @@ c_url = input('Enter cource URL  : ')
 name = input('Enter directory name : ')
 #make directory to save the pdf files
 c_directory = os.getcwd()
-directory_name = c_directory + '/' + name
-os.mkdir(directory_name)
+directory_name = c_directory + '\\' + name
+print(directory_name)
+if os.path.exists(directory_name):
+    print("This directory name has been exited.")
+else:
+    os.mkdir(directory_name)
 
 # Optional settings of chrome driver
 options = webdriver.ChromeOptions()
 options.add_experimental_option('prefs', {
-    'download.default_directory': directory_name
+    "download.default_directory": directory_name,
+    "printing.print_preview_sticky_settings.appState": json.dumps(appState),
+    'download.prompt_for_download': False,
+    "plugins.always_open_pdf_externally": True,
 })
-options.add_argument('--headless')
 options.add_argument('--kiosk-printing')
-os.chdir(directory_name)
-
+options.add_argument('--headless')
 # Boot chrome driver
 driver = webdriver.Chrome(options=options)
 driver.set_page_load_timeout(15) # Time out 15 sec
-
+driver.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
+driver.execute("send_command", {
+    'cmd': 'Page.setDownloadBehavior',
+    'params': {
+        'behavior': 'allow',
+        'downloadPath': directory_name # ダウンロード先
+    }
+})
 # GET (HTML Page)
 driver.get(USERDATALIST[2])
 time.sleep(5)
@@ -47,6 +71,7 @@ pw_element.send_keys(USERDATALIST[1])
 
 
 # Click login button
+print("Login Successed")
 time.sleep(5)
 
 #access to cource page
@@ -59,11 +84,13 @@ for url in links:
     parse = urlparse(url)
     filepath = parse.path
     if filepath == "/mod/resource/view.php":
+        
         driver.get(url)
+        
         #download a pdf
-        driver.execute_script('window.print();')
+        
         print("file downloading...")
-        time.sleep(2)
+        time.sleep(3)
 
 print("Complete!")
 

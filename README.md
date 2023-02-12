@@ -14,7 +14,7 @@ windowsで試した人いたら教えて欲しいかも．winでのPython環境�
 
 (seleniumとchrome driverの導入の参考：https://qiita.com/memakura/items/20a02161fa7e18d8a693)
 
-Pythonの環境があれば，pipでseleniumをインストールし，chrome driverもpipでインストールし，`chromedriver-path`でchrome driverがインストールされたディレクトリーがわかるので，コピーしてPATHを通せば完了です．
+Pythonの環境があれば，`pip install selenium`でseleniumをインストールし，chrome driverも`pip install chromedriver-binary`でインストールすれば完了です．エラーが出る場合は，`chromedriver-path`でchrome driverがインストールされたディレクトリーがわかるので，コピーしてPATHを通せば完了です．
 
 **追記**:batファイルにpipとバイナリのフルパスを表示するコマンドの例を載せているので，テキストエディタなどで参照してください．
 
