@@ -1,3 +1,0 @@
-([('test',
-   '/Users/nakatahiroto/moodledownroader/moodlepdfdonwnloader/dist/test',
-   'EXECUTABLE')],)
