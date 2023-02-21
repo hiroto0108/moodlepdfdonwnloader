@@ -17,11 +17,11 @@ USERDATALIST = ["",""]
 URLFOLDER = [""]
 #definition Function
 
-#make directory to save the pdf files
+#make directory to save the pdf files　/Users/nakatahiroto
 def makedirectory(FOLDERNAME):
     c_directory = sys.argv[0]
     
-    directory_name = c_directory.replace("test",FOLDERNAME)
+    directory_name = c_directory.replace("dist/"+FOLDERNAME+".app/Contents/MacOS/"+FOLDERNAME,FOLDERNAME)
     #directory_name = c_directory + '/' + FOLDERNAME
     
     print(directory_name)
