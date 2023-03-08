@@ -8,14 +8,71 @@ from selenium.webdriver.common.action_chains import ActionChains
 from urllib.parse import urlparse
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 import os
 import platform
 import sys
 
+
+
 INITIATE_INFO_LIST = ["",""]
 USERDATALIST = ["",""]
 URLFOLDER = [""]
+
 #definition Function
+
+#show error message
+def errorpopup(ERRORMESSAGE):
+    root = Tk()
+    root.title('Error')
+
+    # Frame as widget container
+    frame1 = ttk.Frame(root)
+    frame1.grid()
+    # Label 1
+    label1 = ttk.Label(
+        frame1,
+        text=ERRORMESSAGE,
+        padding=(20)) # (left, top, right, bottom)
+    label1.grid(row=0, column=1)
+
+    frame2 = ttk.Frame(frame1, padding=(0, 5))
+    frame2.grid(row=2, column=1, sticky=W)
+
+    button1 = ttk.Button(
+        frame2, text='OK',
+        command=lambda:[sys.exit(), root.quit()]
+    )
+    button1.pack(side=BOTTOM)
+        
+    root.mainloop()
+
+#MessageBox
+""" def messagebox(MESSAGE):
+    root = Tk()
+    root.title('Progress')
+
+    # Frame as widget container
+    frame1 = ttk.Frame(root)
+    frame1.grid()
+    # Label 1
+    label1 = ttk.Label(
+        frame1,
+        text=MESSAGE,
+        padding=(20)) # (left, top, right, bottom)
+    label1.grid(row=0, column=1)
+
+    frame2 = ttk.Frame(frame1, padding=(0, 5))
+    frame2.grid(row=2, column=1, sticky=W)
+
+    button1 = ttk.Button(
+        frame2, text='OK',
+        command=lambda:[root.quit()]
+    )
+    button1.pack(side=BOTTOM)
+        
+    root.mainloop()
+ """
 
 #make directory to save the pdf files
 def makedirectory(FOLDERNAME):
@@ -26,32 +83,7 @@ def makedirectory(FOLDERNAME):
     
     print(directory_name)
     if os.path.exists(directory_name):
-
-        root = Tk()
-        root.title('Error')
-
-        # Frame as widget container
-        frame1 = ttk.Frame(root)
-        frame1.grid()
-
-
-        # Label 1
-        label1 = ttk.Label(
-            frame1,
-            text='This name folder has been existed.Please chage name!',
-            padding=(20)) # (left, top, right, bottom)
-        label1.grid(row=0, column=1)
-
-        frame2 = ttk.Frame(frame1, padding=(0, 5))
-        frame2.grid(row=2, column=1, sticky=W)
-
-        button1 = ttk.Button(
-            frame2, text='OK',
-            command=lambda:[sys.exit(), root.exit()]
-        )
-        button1.pack(side=BOTTOM)
-        
-        root.mainloop()
+        errorpopup('This name folder has been existed.Please chage name!')
     else:
         os.mkdir(directory_name)
         return directory_name
@@ -127,7 +159,7 @@ def get_initiate_info():
     )
     button1.pack(side=LEFT)
 
-    button2 = ttk.Button(frame2, text='Cancel', command=lambda:[sys.exit(), root.exit()])
+    button2 = ttk.Button(frame2, text='Cancel', command=lambda:[sys.exit(), root.quit()])
     button2.pack(side=LEFT)
     
     #display mainwindow
@@ -157,7 +189,7 @@ def downloadfile():
     print("folder change done")
     # Boot chrome driver
     driver = webdriver.Chrome(options=options)
-    driver.set_page_load_timeout(15) # Time out 15 sec
+    driver.set_page_load_timeout(30) # Time out 30 sec
     # GET (HTML Page)
     driver.get(INITIATE_INFO_LIST[1])
     time.sleep(5)
@@ -169,14 +201,22 @@ def downloadfile():
     pw_element = driver.find_element(By.NAME,"j_password")
     pw_element.send_keys(USERDATALIST[1])
 
-
+    #get current URL for checking page_changed
+    cur_url = driver.current_url
+    
     # Click login button
     login_button = driver.find_element(By.NAME,"_eventId_proceed")
     login_button.click()
     time.sleep(5)
-    print("login done")
     
-    print("access done")
+    #check URL
+    now_url = driver.current_url
+    if(now_url != cur_url):
+        messagebox.showinfo("login", "Login Complete!")
+        print("access done")
+    else:
+        errorpopup("Fail Access:Please check network access and try one more!")
+    
     time.sleep(2)
     #get the links to class pdf files
     elements = driver.find_elements(By.XPATH,"//a[@href]")
@@ -216,4 +256,4 @@ get_initiate_info()
 #getcource()
 #access to cource page
 
-print("Complete!")
+messagebox.showinfo("download","File download Complete!")
