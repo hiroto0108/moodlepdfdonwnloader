@@ -158,7 +158,8 @@ def get_initiate_info():
     password_entry = ttk.Entry(
         frame1,
         textvariable=password,
-        width=20
+        width=20,
+        show="*"
     )
     password_entry.grid(row=3, column=1)
     
