@@ -46,9 +46,11 @@ def errorpopup(ERRORMESSAGE):
     button1.pack(side=BOTTOM)
         
     root.mainloop()
+    
+    time.sleep(10000)
 
 #MessageBox
-""" def messagebox(MESSAGE):
+def Messagebox(MESSAGE):
     root = Tk()
     root.title('Progress')
 
@@ -63,16 +65,16 @@ def errorpopup(ERRORMESSAGE):
     label1.grid(row=0, column=1)
 
     frame2 = ttk.Frame(frame1, padding=(0, 5))
-    frame2.grid(row=2, column=1, sticky=W)
+    frame2.grid(row=2, column=2, sticky=W)
 
     button1 = ttk.Button(
         frame2, text='OK',
-        command=lambda:[root.quit()]
+        command=lambda:[sys.exit(),root.quit()]
     )
     button1.pack(side=BOTTOM)
         
     root.mainloop()
- """
+
 
 #make directory to save the pdf files
 def makedirectory(FOLDERNAME):
@@ -83,10 +85,22 @@ def makedirectory(FOLDERNAME):
     
     print(directory_name)
     if os.path.exists(directory_name):
-        errorpopup('This name folder has been existed.Please chage name!')
+        #errorpopup('This name folder has been existed.Please chage name!')
+        directory_name = makedirectoryforce(1,directory_name)
+        return directory_name
     else:
         os.mkdir(directory_name)
         return directory_name
+
+#make directory there is same name
+def makedirectoryforce(n,DIRECTORYNAME):
+    if os.path.exists(DIRECTORYNAME + "(" + str(n) + ")"):
+        n+=1
+        DIRECTORYNAME = makedirectoryforce(n,DIRECTORYNAME)
+        return DIRECTORYNAME
+    else:
+        os.mkdir(DIRECTORYNAME + "(" + str(n) + ")")
+        return DIRECTORYNAME + "(" + str(n) + ")"
 
 #get Information for Initiate Settings
 def get_initiate_info():
@@ -144,7 +158,8 @@ def get_initiate_info():
     password_entry = ttk.Entry(
         frame1,
         textvariable=password,
-        width=20
+        width=20,
+        show="*"
     )
     password_entry.grid(row=3, column=1)
     
@@ -232,6 +247,7 @@ def downloadfile():
             print("file downloading...")
             time.sleep(2)
     driver.quit()
+    Messagebox("File download complete!")
         
         
 
@@ -256,4 +272,4 @@ get_initiate_info()
 #getcource()
 #access to cource page
 
-messagebox.showinfo("download","File download Complete!")
+#messagebox.showinfo("download","File download Complete!")
