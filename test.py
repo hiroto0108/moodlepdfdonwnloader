@@ -65,7 +65,7 @@ def Messagebox(MESSAGE):
     label1.grid(row=0, column=1)
 
     frame2 = ttk.Frame(frame1, padding=(0, 5))
-    frame2.grid(row=2, column=1, sticky=W)
+    frame2.grid(row=2, column=2, sticky=W)
 
     button1 = ttk.Button(
         frame2, text='OK',
